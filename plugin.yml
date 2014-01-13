@@ -1,0 +1,7 @@
+name: ChatDecoration
+main: tk.pbfy0.chatdecoration.ChatDecoration
+version: 1.0
+permissions:
+    chatdecoration.use:
+        description: Use chat decoration
+        default: true
