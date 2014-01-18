@@ -15,13 +15,16 @@ public final class ChatDecorationListener implements Listener {
 	public void onChat(AsyncPlayerChatEvent event){
 		if(event.isCancelled())
 			return;
-		if(!event.getPlayer().hasPermission("chatdecoration.use"))
-			return;
+		Player player = event.getPlayer();
 		String text = event.getMessage();
-		text = text.replaceAll("==((?=\\S).+?(?=\\S))==", ChatColor.BOLD + "$1" + ChatColor.RESET);
-		text = text.replaceAll("--((?=\\S).+?(?=\\S))--", ChatColor.STRIKETHROUGH + "$1" + ChatColor.RESET);
-		text = text.replaceAll("__((?=\\S).+?(?=\\S))__", ChatColor.UNDERLINE + "$1" + ChatColor.RESET);
-		text = text.replaceAll("\\*\\*((?=\\S).+?(?=\\S))\\*\\*", ChatColor.ITALIC + "$1" + ChatColor.RESET);
+		if(player.hasPermission("chatdecoration.style.bold"))
+			text = text.replaceAll("==((?=\\S).+?(?=\\S))==", ChatColor.BOLD + "$1" + ChatColor.RESET);
+		if(player.hasPermission("chatdecoration.style.strikethrough"))
+			text = text.replaceAll("--((?=\\S).+?(?=\\S))--", ChatColor.STRIKETHROUGH + "$1" + ChatColor.RESET);
+		if(player.hasPermission("chatdecoration.style.underline"))
+			text = text.replaceAll("__((?=\\S).+?(?=\\S))__", ChatColor.UNDERLINE + "$1" + ChatColor.RESET);
+		if(player.hasPermission("chatdecoration.style.italics"))
+			text = text.replaceAll("\\*\\*((?=\\S).+?(?=\\S))\\*\\*", ChatColor.ITALIC + "$1" + ChatColor.RESET);
 		text = findColorCodes(text, event.getPlayer());
 		event.setMessage(text);
 	}
@@ -37,7 +40,9 @@ public final class ChatDecorationListener implements Listener {
 				matcher.appendReplacement(output, matcher.group(2));
 				continue;
 			}
-			String rep = color + matcher.group(2) + ChatColor.RESET;
+			String rep = player.hasPermission("chatdecoration.color." + color.name().toLowerCase()) ?
+					color + matcher.group(2) + ChatColor.RESET :
+					matcher.group(2);
 			matcher.appendReplacement(output, rep);
 		}
 		matcher.appendTail(output);

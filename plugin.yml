@@ -1,7 +1,35 @@
 name: ChatDecoration
 main: tk.pbfy0.chatdecoration.ChatDecoration
-version: 1.0
+version: 1.2
+commands:
+    cd:
+        description: General command for ChatDecoration
+        usage: /<command> help|colors
 permissions:
-    chatdecoration.use:
+    chatdecoration.style.*:
+        default: true
+        children:
+            chatdecoration.style.underline: true
+            chatdecoration.style.bold: true
+            chatdecoration.style.strikethrough: true
+            chatdecoration.style.italics: true
+    chatdecoration.color.*:
+        default: true
+    chatdecoration.style.underline:
+        default: true
+    chatdecoration.style.bold:
+        default: true
+    chatdecoration.style.strikethrough:
+        default: true
+    chatdecoration.style.italics:
+        default: true
+    chatdecoration.*:
         description: Use chat decoration
         default: true
+        children:
+            chatdecoration.style.*: true
+            chatdecoration.color.*: true
+    chatdecoration.use:
+        description: synonym for chatdecoration.*
+        children:
+            chatdecoration.*: true
